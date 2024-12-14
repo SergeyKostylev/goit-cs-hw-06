@@ -1,0 +1,21 @@
+version: '3.1'
+
+services:
+  mongodb:
+    image: mongo:5.0
+    ports:
+      - '27017:27017'
+    volumes:
+      - ./mongo_data:/data/db
+  python-app:
+    build: .
+    container_name: python-app
+    volumes:
+      - ./app:/app
+    depends_on:
+      - mongodb
+    ports:
+      - "5099:5099"
+      - "3000:3000"
+volumes:
+  mongo_data:
